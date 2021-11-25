@@ -19,11 +19,7 @@ AVR Arduino
 
 <a id="install"></a>
 ## Установка
-- **БИБЛИОТЕКА ПОКА ЧТО НЕДОСТУПНА В МЕНЕДЖЕРЕ БИБЛИОТЕК**
-- Библиотеку можно найти по названию **EasyHID** и установить через менеджер библиотек в:
-    - Arduino IDE
-    - Arduino IDE v2
-    - PlatformIO
+- **БИБЛИОТЕКА НЕДОСТУПНА В МЕНЕДЖЕРЕ БИБЛИОТЕК**
 - [Скачать библиотеку](https://github.com/GyverLibs/EasyHID/archive/refs/heads/main.zip) .zip архивом для ручной установки:
     - Распаковать и положить в *C:\Program Files (x86)\Arduino\libraries* (Windows x64)
     - Распаковать и положить в *C:\Program Files\Arduino\libraries* (Windows x32)
