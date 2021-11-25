@@ -40,7 +40,7 @@ AVR Arduino
 ### HID
 ```cpp
 HID.begin();        // Инициализация шины USB
-HID.tick();			// Поллинг шины (вызывать не реже чем раз в 10мс!)
+HID.tick();         // Поллинг шины (вызывать не реже чем раз в 10мс!)
 HID.isConnected();  // (bool) Статус шины
 HID.isNumLock();    // (bool) проверка numLock
 HID.isCapsLock();   // (bool) проверка capsLock
@@ -50,9 +50,9 @@ HID.isScrollLock(); // (bool) проверка scrollLock
 ### Mouse
 ```cpp
 Mouse.move(int8_t x, int8_t y);         // Двигаем курсор
-Mouse.click(uint8_t btn = MOUSE_LEFT);	// Кликаем на клавишу
-Mouse.press(uint8_t btn = MOUSE_LEFT);	// Зажимаем клавишу
-Mouse.releaseAll();					    // Отпускаем все
+Mouse.click(uint8_t btn = MOUSE_LEFT);  // Кликаем на клавишу
+Mouse.press(uint8_t btn = MOUSE_LEFT);  // Зажимаем клавишу
+Mouse.releaseAll();                     // Отпускаем все
 
 // КОНСТАНТЫ КНОПОК
 MOUSE_LEFT
