@@ -204,6 +204,8 @@ KEY_WAKE
 ## Пример
 ### Клавиатура
 ```cpp
+#include <EasyHID.h>
+
 void setup() {
   HID.begin();                          // Инициализация USB
 }
@@ -226,6 +228,8 @@ void loop() {
 
 ### Мышь
 ```cpp
+#include <EasyHID.h>
+
 void setup() {
   HID.begin();                          // Инициализация USB
 }
