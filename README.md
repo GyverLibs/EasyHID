@@ -1,14 +1,16 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![author](https://img.shields.io/badge/author-AlexGyver-informational.svg)
 # EasyHID
-Библиотека программного USB клавиатуры и мыши для Arduino Nano/UNO/Mega и прочих
-- Программный USB
-- Работает на любой AVR Arduino 16 МГц
-- Поддержка мультимедийных клавиш
-- **Некоторые клавиши и системные сочетания могут не работать**, особенность библиотеки VUSB
+Библиотека для программной реализации USB клавиатуры и мышки на ATmega328p - (Arduino Nano/UNO/Mini/Pro Mini)
+- Библиотека предназначена ТОЛЬКО для плат на базе ATmega328p, работающих на частоте 16 МГц
+- В текущей реализации не работают системные клавиши (TAB, CAPS, SHIFT, CTRL, WIN, ALT)
+- Библиотека подходит для:
+  - Печати текста
+  - Управления мультимедиа
+  - Удалённого выключения ПК
 
 ### Совместимость
-AVR Arduino 16 МГц
+AVR ATmega328 16 MHz
 
 ## Содержание
 - [Установка](#install)
