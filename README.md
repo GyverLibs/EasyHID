@@ -24,7 +24,7 @@ AVR ATmega328 16 MHz
 
 <a id="install"></a>
 ## Установка
-- **БИБЛИОТЕКА НЕДОСТУПНА В МЕНЕДЖЕРЕ БИБЛИОТЕК**
+- **БИБЛИОТЕКА НЕДОСТУПНА В МЕНЕДЖЕРЕ БИБЛИОТЕК** из-за структуры проекта. Если кто то сможет запустить код из папки src - кидайте пулл реквест!
 - [Скачать библиотеку](https://github.com/GyverLibs/EasyHID/archive/refs/heads/main.zip) .zip архивом для ручной установки:
     - Распаковать и положить в *C:\Program Files (x86)\Arduino\libraries* (Windows x64)
     - Распаковать и положить в *C:\Program Files\Arduino\libraries* (Windows x32)
