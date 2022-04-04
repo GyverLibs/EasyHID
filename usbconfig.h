@@ -1,57 +1,41 @@
-/* Name: usbconfig.h
-* Project: V-USB, virtual USB port for Atmel's(r) AVR(r) microcontrollers
-* Author: Christian Starkjohann
-* Creation Date: 2005-04-01
-* Tabsize: 4
-* Copyright: (c) 2005 by OBJECTIVE DEVELOPMENT Software GmbH
-* License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary (CommercialLicense.txt)
+/* 
+   Стандартный usbcfg библиотеки v-usb 
 */
-
-/*
-This file has been modified for use as a part of TrinketHidCombo
-
-Copyright (c) 2013 Adafruit Industries
-All rights reserved.
-
-TrinketHidCombo is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation, either version 3 of
-the License, or (at your option) any later version.
-
-TrinketHidCombo is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with TrinketHidCombo. If not, see
-<http://www.gnu.org/licenses/>.
-*/
-
-// #include "cmdline_defs.h"
 
 #ifndef __usbconfig_h_included__
 #define __usbconfig_h_included__
 
-/* ---------------------------- Hardware Config ---------------------------- */
+/* ATtiny48 / ATtiny88 - Digispark подобные платы с usb загрузчиком */
+#if (defined (__AVR_ATtiny48__) || defined (__AVR_ATtiny88__))
+#define USB_CFG_IOPORTNAME     		D		// PORTD
+#define USB_CFG_DMINUS_BIT     		1   	// (D-) = PD1	
+#define USB_CFG_DPLUS_BIT      		2		// (D+) = PD2 (INT0)
+// #define USB_CFG_PULLUP_IOPORTNAME  		// PULLUP не распаян
+// #define USB_CFG_PULLUP_BIT				// PULLUP не распаян
 
-#define USB_CFG_IOPORTNAME      D
-/* This is the port where the USB bus is connected. When you configure it to
-* "B", the registers PORTB, PINB and DDRB will be used.
-*/
-#define USB_CFG_DMINUS_BIT      4
-/* This is the bit number in USB_CFG_IOPORT where the USB D- line is connected.
-* This may be any bit in the port.
-*/
-#define USB_CFG_DPLUS_BIT       2
-/* This is the bit number in USB_CFG_IOPORT where the USB D+ line is connected.
-* This may be any bit in the port. Please note that D+ must also be connected
-* to interrupt pin INT0! [You can also use other interrupts, see section
-* "Optional MCU Description" below, or you can connect D- to the interrupt, as
-* it is required if you use the USB_COUNT_SOF feature. If you use D- for the
-* interrupt, the USB interrupt will also be triggered at Start-Of-Frame
-* markers every millisecond.]
-*/
+/* Digispark Pro на 16 Мгц  */
+#elif defined (__AVR_ATtiny167__)
+#define USB_CFG_IOPORTNAME     		B		// PORTB
+#define USB_CFG_DMINUS_BIT     		3   	// (D-) = PB3	
+#define USB_CFG_DPLUS_BIT      		6		// (D+) = PB6 (INT0)
+
+
+/* ATmega48p...ATmega328p - Arduino платы и голые камни */
+#elif (defined (__AVR_ATmega48P__) || defined (__AVR_ATmega88P__) ||  \
+	   defined (__AVR_ATmega168P__) || defined (__AVR_ATmega328P__))
+#define USB_CFG_IOPORTNAME     		D		// PORTD
+#define USB_CFG_DMINUS_BIT     		4		// (D-) = PD4	
+#define USB_CFG_DPLUS_BIT      		2		// (D+) = PD2 (INT0)
+#if(EASYHID_SOFT_DETACH)					// PULLUP по желанию
+#define USB_CFG_PULLUP_IOPORTNAME  	D		// PORTD	
+#define USB_CFG_PULLUP_BIT			5		// PD5
+#endif
+
+/* Для будущих дополнений... */
+#endif
+
+
+/* ---------------------------- Hardware Config ---------------------------- */
 #define USB_CFG_CLOCK_KHZ       (F_CPU/1000)
 /* Clock rate of the AVR in kHz. Legal values are 12000, 12800, 15000, 16000,
 * 16500, 18000 and 20000. The 12.8 MHz and 16.5 MHz versions of the code
@@ -66,20 +50,6 @@ License along with TrinketHidCombo. If not, see
 * data packets (CRC checks). CRC checks cost quite a bit of code size and are
 * currently only available for 18 MHz crystal clock. You must choose
 * USB_CFG_CLOCK_KHZ = 18000 if you enable this option.
-*/
-
-/* ----------------------- Optional Hardware Config ------------------------ */
-
-#define USB_CFG_PULLUP_IOPORTNAME   D 
-/* If you connect the 1.5k pullup resistor from D- to a port pin instead of
-* V+, you can connect and disconnect the device from firmware by calling
-* the macros usbDeviceConnect() and usbDeviceDisconnect() (see usbdrv.h).
-* This constant defines the port on which the pullup resistor is connected.
-*/
-#define USB_CFG_PULLUP_BIT          5 
-/* This constant defines the bit number in USB_CFG_PULLUP_IOPORT (defined
-* above) where the 1.5k pullup resistor is connected. See description
-* above for details.
 */
 
 /* --------------------------- Functional Range ---------------------------- */
@@ -172,7 +142,7 @@ License along with TrinketHidCombo. If not, see
 * proceed, do a return after doing your things. One possible application
 * (besides debugging) is to flash a status LED on each packet.
 */
-/* #define USB_RESET_HOOK(resetStarts)     if(!resetStarts){hadUsbReset();} */
+// #define USB_RESET_HOOK(resetStarts)  if(!resetStarts){cli(); calibrateOscillator(); sei();}
 /* This macro is a hook if you need to know when an USB RESET occurs. It has
 * one parameter which distinguishes between the start of RESET state and its
 * end.

@@ -1,18 +1,21 @@
-[![Foo](https://img.shields.io/badge/Version-1.0-brightgreen.svg?style=flat-square)](#versions)
+[![Foo](https://img.shields.io/badge/Version-2.0-brightgreen.svg?style=flat-square)](#versions)
 [![Foo](https://img.shields.io/badge/Website-AlexGyver.ru-blue.svg?style=flat-square)](https://alexgyver.ru/)
 [![Foo](https://img.shields.io/badge/%E2%82%BD$%E2%82%AC%20%D0%9D%D0%B0%20%D0%BF%D0%B8%D0%B2%D0%BE-%D1%81%20%D1%80%D1%8B%D0%B1%D0%BA%D0%BE%D0%B9-orange.svg?style=flat-square)](https://alexgyver.ru/support_alex/)
 
 # EasyHID
-Библиотека для программной реализации USB клавиатуры и мышки на ATmega328p - (Arduino Nano/UNO/Mini/Pro Mini)
-- Библиотека предназначена ТОЛЬКО для плат на базе ATmega328p, работающих на частоте 16 МГц
-- В текущей реализации не работают системные клавиши (TAB, CAPS, SHIFT, CTRL, WIN, ALT)
-- Библиотека подходит для:
-  - Печати текста
-  - Управления мультимедиа
-  - Удалённого выключения ПК
+Библиотека для программной реализации USB клавиатуры и мышки на некоторых МК AVR и платах на их основе
+- Буквенные клавиши
+- Мультимедийные клавиши
+- Системные клавиши и сочетания
+- Буферизация нажатий
+- Движение мышки и нажатие её кнопок
 
 ### Совместимость
-AVR ATmega328 16 MHz
+- ATmega328 16 MHz (плата Nano, Uno, Mini)
+- ATtiny88 (плата MH-ET)
+- ATtiny167 (плата Digispark PRO)
+- ATtiny48
+- ATmega168/88/48/8
 
 ## Содержание
 - [Установка](#install)
@@ -34,26 +37,49 @@ AVR ATmega328 16 MHz
 
 <a id="wiring"></a>
 ## Подключение
+Схема на примере Arduino Nano
 ![scheme](/docs/schemes.png)
+- Стабилитрон - любой маломощный на 3.6V
+- Резистор 100 Ом - можно заменить на другой в диапазоне 47.. 200 Ом
+- Резистор 1.5 кОм - можно заменить на другой в диапазоне 1.2.. 2.2 кОм
+- Диод - любой обычный кремниевый (с падением 0.7V)
+
+> Если используется активная подтяжка при помощи пина, добавь `#define EASYHID_SOFT_DETACH` ПЕРЕД подключением EasyHID.h
+
+### HID
+Порт и пин можно задать в файле *usbconfig.h*. Стандартные:
+- ATtiny88 (плата MH-ET) - USB распаян на плате
+    - **D-** - пин 0 (PD1)
+    - **D+** - пин 2 (PD2) (INT0)
+
+- ATtiny167 (плата Digispark PRO) - USB распаян на плате
+    - **D-** - пин 4 (PB3)
+    - **D+** - пин 3 (PB6) (INT0)
+    
+- ATmega328/168/88/48
+    - **D-** - (PD4)
+    - **D+** - (PD2) (INT0)
+    - **PULL** - (PD5)
 
 <a id="usage"></a>
 ## Использование
 ### HID
 ```cpp
-HID.begin();        // Инициализация шины USB
-HID.tick();         // Поллинг шины (вызывать не реже чем раз в 10мс!)
-HID.isConnected();  // (bool) Статус шины
-HID.isNumLock();    // (bool) проверка numLock
-HID.isCapsLock();   // (bool) проверка capsLock
-HID.isScrollLock(); // (bool) проверка scrollLock
+HID.begin();            // Инициализация шины USB
+HID.end();              // Отключение шины USB
+HID.tick();             // Поллинг шины (вызывать не реже, чем раз в 10мс)
+HID.isConnected();      // (bool) Статус шины
+HID.isNumLock();        // (bool) Проверка numLock
+HID.isCapsLock();       // (bool) Проверка capsLock
+HID.isScrollLock();     // (bool) Проверка scrollLock
 ```
 
 ### Mouse
 ```cpp
-Mouse.move(int8_t x, int8_t y);         // Двигаем курсор
-Mouse.click(uint8_t btn = MOUSE_LEFT);  // Кликаем на клавишу
-Mouse.press(uint8_t btn = MOUSE_LEFT);  // Зажимаем клавишу
-Mouse.releaseAll();                     // Отпускаем все
+Mouse.move(int8_t x, int8_t y);     // Двигаем курсор
+Mouse.click(uint8_t btn);           // Кликаем на клавишу
+Mouse.press(uint8_t btn);           // Зажимаем клавишу
+Mouse.releaseAll();                 // Отпускаем все
 
 // КОНСТАНТЫ КНОПОК
 MOUSE_LEFT
@@ -63,44 +89,42 @@ MOUSE_MIDDLE
 
 ### Keyboard
 ```cpp
-Keyboard.releaseAll(void);                                      // Отпускаем все
+Keyboard.press(uint8_t key1, ... key5);     // Нажатие до пяти кнопок
+Keyboard.click(uint8_t key1, ... key5);     // Клик до пяти кнопок
+Keyboard.release(uint8_t key1, ... key5);   // Отпускание до пяти кнопок
+Keyboard.releaseAll();                      // Отпустить все ранее нажатые
+Keyboard.clickMultimediaKey(uint8_t key);   // Кликнуть мультимедиа клавишу
+Keyboard.clickSystemKey(uint8_t key);       // Кликнуть системную клавишу
 
-Keyboard.press(uint8_t key);                                    // Жмем 1 клавишу
-Keyboard.press(uint8_t key_0, uint8_t key_1);                   // Жмем 2 клавиши
-Keyboard.press(uint8_t key_0, uint8_t key_1, uint8_t key_2);    // Жмем 3 клавиши
-
-Keyboard.click(uint8_t key);                                    // Кликаем 1 клавишу
-Keyboard.click(uint8_t key_0, uint8_t key_1);                   // Кликаем 2 клавиши
-Keyboard.click(uint8_t key_0, uint8_t key_1, uint8_t key_2);    // Кликаем 3 клавиши
-
-Keyboard.clickMultimediaKey(uint8_t key);                       // Кликаем мультимедиа клавишу
-Keyboard.clickSystemKey(uint8_t key);                           // Кликаем системную клавишу
+Keyboard.write(uint8_t data);               // Напечатать символ
+Keyboard.print();                           // Напечатать любой тип данных (из Print.h)
+Keyboard.println();                         // Напечатать любой тип данных (из Print.h)
 ```
 
+#### Константы клавиш
 <details>
-<summary>КОНСТАНТЫ КЛАВИШ</summary>
+<summary>Системные</summary>
 
 ```cpp
-// для сочетаний
-KEY_MOD_LEFT_CONTROL
-KEY_MOD_LEFT_SHIFT
-KEY_MOD_LEFT_ALT
-KEY_MOD_LEFT_GUI
-KEY_MOD_RIGHT_CONTROL
-KEY_MOD_RIGHT_SHIFT
-KEY_MOD_RIGHT_ALT
-KEY_MOD_RIGHT_GUI
-
-// обычные
 KEY_LEFT_CONTROL
 KEY_LEFT_SHIFT
 KEY_LEFT_ALT
-KEY_LEFT_GUI
+KEY_LEFT_WIN
 KEY_RIGHT_CONTROL
 KEY_RIGHT_SHIFT
 KEY_RIGHT_ALT
-KEY_RIGHT_GUI
+KEY_RIGHT_WIN
 
+KEY_POWER
+KEY_SLEEP
+KEY_WAKE
+```
+</details>
+
+<details>
+<summary>Обычные</summary>
+
+```cpp
 KEY_1
 KEY_2
 KEY_3
@@ -174,12 +198,17 @@ KEY_ARROW_RIGHT
 KEY_ARROW_LEFT
 KEY_ARROW_DOWN
 KEY_ARROW_UP
+```
+</details>
 
-// multimedia
+<details>
+<summary>Мультимедийные</summary>
+
+```cpp
 KEY_VOL_UP
 KEY_VOL_DOWN
-KEY_SCAN_NEXT_TRACK
-KEY_SCAN_PREV_TRACK
+KEY_NEXT_TRACK
+KEY_PREV_TRACK
 KEY_STOP
 KEY_PLAYPAUSE
 KEY_MUTE
@@ -196,16 +225,14 @@ KEY_KB_CUT
 KEY_KB_COPY
 KEY_KB_PASTE
 KEY_KB_FIND
-
-// system
-KEY_POWER
-KEY_SLEEP
-KEY_WAKE
 ```
 </details>
 
+
 <a id="example"></a>
-## Пример
+## Примеры
+> Смотри более расширенные примеры в папке examples!
+
 ### Клавиатура
 ```cpp
 #include <EasyHID.h>
@@ -261,6 +288,15 @@ void loop() {
 <a id="versions"></a>
 ## Версии
 - v1.0
+- v2.0
+    - Добавлена буферизация клавиш (до 5 штук одновременно нажатых)
+    - Добавлен release(), от одной до 5 клавиш
+    - Работают системные клавиши и сочетания
+    - Добавлена поддержка платы Digispark PRO на базе ATtiny167
+    - Добавлена поддержка платы MH-ET на базе ATtiny88
+    - Теперь если в схеме задействована активная подтяжка (см. схему) надо перед подключением либы дописать #define EASYHID_SOFT_DETACH
+    - Добавлен метод end(): отключает USB, корректно воспринимается компом без ошибки только при использовании схемы с активным pullup
+    - Добавлены более удобные константы
 
 <a id="feedback"></a>
 ## Баги и обратная связь

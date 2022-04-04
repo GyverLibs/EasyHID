@@ -120,8 +120,6 @@ const PROGMEM char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] 
     0xC0,                   // END_COLLECTION
 };
 
-// see http://vusb.wikidot.com/driver-api
-// constants are found in usbdrv.h
 usbMsgLen_t usbFunctionSetup(uint8_t data[8])
 {
     usb_hasCommed = 1;

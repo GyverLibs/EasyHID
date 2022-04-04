@@ -8,23 +8,16 @@
 #define MOUSE_RIGHT				0x02
 #define MOUSE_MIDDLE			0x04
 
-#define KEY_MOD_LEFT_CONTROL	0x01
-#define KEY_MOD_LEFT_SHIFT		0x02
-#define KEY_MOD_LEFT_ALT		0x04
-#define KEY_MOD_LEFT_GUI		0x08
-#define KEY_MOD_RIGHT_CONTROL	0x10
-#define KEY_MOD_RIGHT_SHIFT		0x20
-#define KEY_MOD_RIGHT_ALT		0x40
-#define KEY_MOD_RIGHT_GUI		0x80
-
 #define KEY_LEFT_CONTROL	0xE0
 #define KEY_LEFT_SHIFT		0xE1
 #define KEY_LEFT_ALT		0xE2
 #define KEY_LEFT_GUI		0xE3
+#define KEY_LEFT_WIN		0xE3
 #define KEY_RIGHT_CONTROL	0xE4
 #define KEY_RIGHT_SHIFT		0xE5
 #define KEY_RIGHT_ALT		0xE6
 #define KEY_RIGHT_GUI		0xE7
+#define KEY_RIGHT_WIN		0xE7
 
 #define KEY_1				0x1E
 #define KEY_2				0x1F
@@ -104,6 +97,8 @@
 #define KEY_VOL_DOWN		0xEA
 #define KEY_SCAN_NEXT_TRACK	0xB5
 #define KEY_SCAN_PREV_TRACK	0xB6
+#define KEY_NEXT_TRACK		0xB5
+#define KEY_PREV_TRACK		0xB6
 #define KEY_STOP			0xB7
 #define KEY_PLAYPAUSE		0xCD
 #define KEY_MUTE			0xE2
@@ -121,6 +116,16 @@
 #define KEY_KB_PASTE		0x7D
 #define KEY_KB_FIND			0x7E
 
-#define KEY_POWER			0x01
-#define KEY_SLEEP			0x02
+#define KEY_SLEEP			0x01
+#define KEY_POWER			0x02
 #define KEY_WAKE			0x03
+
+// СИСТЕМНЫЕ (НЕ ДЛЯ СКЕТЧА)
+#define KEY_MOD_LEFT_CONTROL	0x01
+#define KEY_MOD_LEFT_SHIFT		0x02
+#define KEY_MOD_LEFT_ALT		0x04
+#define KEY_MOD_LEFT_GUI		0x08
+#define KEY_MOD_RIGHT_CONTROL	0x10
+#define KEY_MOD_RIGHT_SHIFT		0x20
+#define KEY_MOD_RIGHT_ALT		0x40
+#define KEY_MOD_RIGHT_GUI		0x80
