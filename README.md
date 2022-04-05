@@ -1,4 +1,4 @@
-[![Foo](https://img.shields.io/badge/Version-2.0-brightgreen.svg?style=flat-square)](#versions)
+[![Foo](https://img.shields.io/badge/Version-2.1-brightgreen.svg?style=flat-square)](#versions)
 [![Foo](https://img.shields.io/badge/Website-AlexGyver.ru-blue.svg?style=flat-square)](https://alexgyver.ru/)
 [![Foo](https://img.shields.io/badge/%E2%82%BD$%E2%82%AC%20%D0%9D%D0%B0%20%D0%BF%D0%B8%D0%B2%D0%BE-%D1%81%20%D1%80%D1%8B%D0%B1%D0%BA%D0%BE%D0%B9-orange.svg?style=flat-square)](https://alexgyver.ru/support_alex/)
 
@@ -297,6 +297,7 @@ void loop() {
     - Теперь если в схеме задействована активная подтяжка (см. схему) надо перед подключением либы дописать #define EASYHID_SOFT_DETACH
     - Добавлен метод end(): отключает USB, корректно воспринимается компом без ошибки только при использовании схемы с активным pullup
     - Добавлены более удобные константы
+- v2.1 - небольшая оптимизация
 
 <a id="feedback"></a>
 ## Баги и обратная связь

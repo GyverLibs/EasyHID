@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "EasyHID.h"
+#include "Codekeys.h"
 
 EasyHID HID;
 MouseClass Mouse;
@@ -228,67 +229,63 @@ size_t KeyboardClass::write(uint8_t data){													// Отправка ascii
 }
 
 
-/*
- Я отказываюсь это комментировать, 
- просто вот такой алгоритм ascii -> code
- Явно экономнее чем таблица
- Кстати компилятор варнинги кидает, гнида
-*/
-void asciiToKey (uint8_t data, uint8_t isCaps, uint8_t* mod, uint8_t* key) {
-    *key = 0b00;
-    *mod = 0b00;
+#define MOD_SHIFT (KEY_MOD_LEFT_SHIFT)
 
-    if (data >= 'A' && data <= 'Z'){
-        *key = 4 + data - 'A';
-        if (isCaps) *mod = 0b00;
-        else *mod = 0b10;
-    } else if (data >= 'a' && data <= 'z') {
-        *key = 4 + data - 'a';
-        if (isCaps) *mod = 0b10;
-        else *mod = 0b00;
-    } else if (data >= '0' && data <= '9') {
-        *mod = 0b00;
-        if (data == '0')*key = 0x27;
-        else *key = 30 + data - '1';
-    } else {
-        switch (data) {
-        case '!': *mod = 0b10; *key = 29 + 1;  break;
-        case '@': *mod = 0b10; *key = 29 + 2;  break;
-        case '#': *mod = 0b10; *key = 29 + 3;  break;
-        case '$': *mod = 0b10; *key = 29 + 4;  break;
-        case '%': *mod = 0b10; *key = 29 + 5;  break;
-        case '^': *mod = 0b10; *key = 29 + 6;  break;
-        case '&': *mod = 0b10; *key = 29 + 7;  break;
-        case '*': *mod = 0b10; *key = 29 + 8;  break;
-        case '(': *mod = 0b10; *key = 29 + 9;  break;
-        case ')': *mod = 0b10; *key = 0x27;    break;
-        case '~': *mod = 0b10;
-        case '`': *key = 0x35; break;
-        case '_': *mod = 0b10;
-        case '-': *key = 0x2D; break;
-        case '+': *mod = 0b10;
-        case '=': *key = 0x2E; break;
-        case '{': *mod = 0b10;
-        case '[': *key = 0x2F; break;
-        case '}': *mod = 0b10;
-        case ']': *key = 0x30; break;
-        case '|': *mod = 0b10;
-        case '\\':*key = 0x31; break;
-        case ':': *mod = 0b10;
-        case ';': *key = 0x33; break;
-        case '"': *mod = 0b10;
-        case '\'':*key = 0x34; break;
-        case '<': *mod = 0b10;
-        case ',': *key = 0x36; break;
-        case '>': *mod = 0b10;
-        case '.': *key = 0x37; break;
-        case '?': *mod = 0b10;
-        case '/': *key = 0x38; break;
-        case ' ': *key = 0x2C; break;
-        case '\t':*key = 0x2B; break;
-        case '\n':*key = 0x28; break;
-        }
+void asciiToKey (uint8_t data, uint8_t isCaps, uint8_t* mod, uint8_t* key) {
+  /*
+    Данная функция преобразует ascii символ в scan-код клавиши,
+    с учетом caps lock, а так же регистра символов. Включает в
+    себя все основные символы, НЕ поддерживает кириллицу
+  */
+  *key = 0x00;                    							// Код клавиши
+  *mod = 0x00;                    							// Модификатор
+  if (data >= 'A' && data <= 'Z') {         				// Прописные буквы
+    *key = KEY_A + (data - 'A');          					// Получаем код клавиши
+    *mod = (isCaps ? 0 : MOD_SHIFT);   						// Если капс нажат - ничего не делаем, не нажат - давим шифт
+  } else if (data >= 'a' && data <= 'z') {      			// Строчные буквы
+    *key = KEY_A + (data - 'a');							// Получаем код клавиши
+    *mod = (isCaps ? MOD_SHIFT : 0);   						// Если капс нажат - давим шифт, не нажат - ничего не делаем	
+  } else if (data >= '0' && data <= '9') {					// Цифры
+	*key = (data != '0' ? KEY_1 + (data - '1') : KEY_0); 	// Получаем код клавиши
+  } else {													// Все остальные символы	
+    switch (data) {											// Выбираем прямо через switch по символу
+      case '!': *mod = MOD_SHIFT; *key = KEY_1;  	break;
+      case '@': *mod = MOD_SHIFT; *key = KEY_2;  	break;
+      case '#': *mod = MOD_SHIFT; *key = KEY_3;  	break;
+      case '$': *mod = MOD_SHIFT; *key = KEY_4;  	break;
+      case '%': *mod = MOD_SHIFT; *key = KEY_5;  	break;
+      case '^': *mod = MOD_SHIFT; *key = KEY_6;  	break;
+      case '&': *mod = MOD_SHIFT; *key = KEY_7;  	break;
+      case '*': *mod = MOD_SHIFT; *key = KEY_8;  	break;
+      case '(': *mod = MOD_SHIFT; *key = KEY_9;  	break;
+      case ')': *mod = MOD_SHIFT; *key = KEY_0;  	break;
+	  case ' ': *key = KEY_SPACE; 					break;
+      case '\t': *key = KEY_TAB; 					break;
+      case '\n': *key = KEY_ENTER; 					break;
+      case '_': *mod = MOD_SHIFT;
+      case '-': *key = KEY_MINUS; 					break;
+      case '+': *mod = MOD_SHIFT;
+      case '=': *key = KEY_EQUAL; 					break;
+      case '{': *mod = MOD_SHIFT;
+      case '[': *key = KEY_SQBRAK_LEFT; 			break;
+      case '}': *mod = MOD_SHIFT;
+      case ']': *key = KEY_SQBRAK_RIGHT; 			break;
+      case '<': *mod = MOD_SHIFT;
+      case ',': *key = KEY_COMMA; 					break;
+      case '>': *mod = MOD_SHIFT;
+      case '.': *key = KEY_PERIOD; 					break;
+      case '?': *mod = MOD_SHIFT;
+      case '/': *key = KEY_SLASH; 					break;
+	  case '|': *mod = MOD_SHIFT;
+      case '\\': *key = 0x31; 						break;
+	  case '"': *mod = MOD_SHIFT;
+      case '\'': *key = 0x34; 						break;
+	  case ':': *mod = MOD_SHIFT;
+      case ';': *key = 0x33; 						break;
+	  case '~': *mod = MOD_SHIFT;
+      case '`': *key = 0x35; 						break;
     }
+  }
 }
 
 /*--------------------------------------------------------------------------------------*/
