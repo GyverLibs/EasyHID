@@ -15,9 +15,9 @@
 
 /* Digispark Pro на 16 Мгц  */
 #elif defined (__AVR_ATtiny167__)
-#define USB_CFG_IOPORTNAME     		B		// PORTB
-#define USB_CFG_DMINUS_BIT     		3   	// (D-) = PB3	
-#define USB_CFG_DPLUS_BIT      		6		// (D+) = PB6 (INT0)
+#define USB_CFG_IOPORTNAME     		B		// PORTD
+#define USB_CFG_DMINUS_BIT     		3   	// (D-) = PD1	
+#define USB_CFG_DPLUS_BIT      		6		// (D+) = PD2 (INT0)
 
 
 /* ATmega48p...ATmega328p - Arduino платы и голые камни */
@@ -26,7 +26,7 @@
 #define USB_CFG_IOPORTNAME     		D		// PORTD
 #define USB_CFG_DMINUS_BIT     		4		// (D-) = PD4	
 #define USB_CFG_DPLUS_BIT      		2		// (D+) = PD2 (INT0)
-#if(EASYHID_SOFT_DETACH)					// PULLUP по желанию
+#if defined(EASYHID_SOFT_DETACH)			// PULLUP по желанию
 #define USB_CFG_PULLUP_IOPORTNAME  	D		// PORTD	
 #define USB_CFG_PULLUP_BIT			5		// PD5
 #endif
