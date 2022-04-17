@@ -20,7 +20,7 @@ void EasyHID::begin(void){
 	   defined (__AVR_ATmega168P__) || defined (__AVR_ATmega328P__))
 	pinMode(4, INPUT); 		
     pinMode(2, INPUT); 
-#if(EASYHID_SOFT_DETACH)		
+#if defined(EASYHID_SOFT_DETACH)		
 	pinMode(5, OUTPUT);
 #endif
 #endif
