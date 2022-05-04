@@ -1,3 +1,5 @@
+This is an automatic translation, may be incorrect in some places. See sources and examples!
+
 # EasyHID
 Library for software implementation of USB keyboard and mouse on some MK AVR and boards based on them
 - Letter keys
