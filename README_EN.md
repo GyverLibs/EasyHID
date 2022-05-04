@@ -245,7 +245,7 @@ void loop() {
     timer = millis();
 
     Keyboard.press(KEY_1); // Hold down the '1' key
-    Keyboard.relecranberry aseAll(); // Release all keys
+    Keyboard.releaseAll(); // Release all keys
     Keyboard.click(KEY_SPACE); // Click the space bar (press + releaseAll)
     keyboard.write('-'); // Output dash
     Keyboard.println("Hello world!"); // Print in println
