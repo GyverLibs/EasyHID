@@ -8,9 +8,9 @@ Library for software implementation of USB keyboard and mouse on some MK AVR and
 
 ### Compatibility
 - ATmega328 16 MHz (Nano, Uno, Mini board)
-- ATtiny88 (MH- ET board)
+- ATtiny88 (MH-ET board)
 - ATtiny167 (Digispark PRO board)
-- ATtiny48
+-ATtiny48
 - ATmega168/88/48/8
 
 ## Content
@@ -44,7 +44,7 @@ Scheme on the example of Arduino Nano
 
 ### Pins
 The port and pin can be set in the *usbconfig.h* file. Standard:
-- ATtiny88 (MH- ET board) - USB soldered on the board
+- ATtiny88 (MH-ET board) - USB soldered on the board
     - **D-** - pin 0 (PD1)
     - **D+** - pin 2 (PD2) (INT0)
 
@@ -267,7 +267,7 @@ void loop() {
   if (millis() - timer >= 1000) { // Every 1000ms
     timer = millis();
     switch (count) {
-      case 0: Mouse.move(100, 0); break; // Move the mouse to X- Y pixels.
+      case 0: Mouse.move(100, 0); break; // Move the mouse to X-Y pixels.
       case 1: Mouse.move(0, 100); break;
       case 2: Mouse.move(-100, 0); break;
       case 3: Mouse.move(0, -100); break;
@@ -283,13 +283,13 @@ void loop() {
 
 <a id="versions"></a>
 ## Versions
--v1.0
+- v1.0
 - v2.0
     - Added buffering of keys (up to 5 pieces simultaneously pressed)
     - Added release(), from one to 5 keys
     - System keys and shortcuts work
     - Added support for Digispark PRO board based on ATtiny167
-    - Added support for MH- ET board based on ATtiny88
+    - Added support for MH-ET board based on ATtiny88
     - Now, if an active pull-up is involved in the circuit (see the diagram), you must either add #define EASYHID_SOFT_DETACH before connecting
     - Added end() method: disables USB, is correctly perceived by the computer without error only when using a circuit with active pullup
     - Added more convenient constants
