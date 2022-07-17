@@ -18,7 +18,7 @@
 - ATmega328 (плата Nano, Uno, Mini)
 - ATmega168/88/48/8
 - ATtiny88 (плата MH-ET) **работает через USB на плате!**
-- ATtiny167 (плата Digispark PRO)
+- ATtiny167 (плата Digispark PRO) **работает через USB на плате!**
 - ATtiny48
 
 ## Содержание
