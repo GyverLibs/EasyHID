@@ -14,7 +14,8 @@
 - Движение мышки и нажатие её кнопок
 
 ### Совместимость
-- ATmega328 16 MHz (плата Nano, Uno, Mini)
+#### Только МК AVR с частотой 16 МГц!
+- ATmega328 (плата Nano, Uno, Mini)
 - ATmega8
 - ATtiny88 (плата MH-ET)
 - ATtiny167 (плата Digispark PRO)
