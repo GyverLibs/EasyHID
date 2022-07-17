@@ -17,7 +17,7 @@
 #### !!! МК AVR с тактированием 16 МГц !!!
 - ATmega328 (плата Nano, Uno, Mini)
 - ATmega8
-- ATtiny88 (плата MH-ET)
+- ATtiny88 (плата MH-ET) **работает через USB на плате!**
 - ATtiny167 (плата Digispark PRO)
 - ATtiny48
 - ATmega168/88/48/8
