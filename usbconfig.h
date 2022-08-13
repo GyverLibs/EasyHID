@@ -22,7 +22,8 @@
 
 /* ATmega48p...ATmega328p - Arduino платы и голые камни */
 #elif (defined (__AVR_ATmega48P__) || defined (__AVR_ATmega88P__) ||  \
-defined (__AVR_ATmega8__) || defined (__AVR_ATmega168P__) || defined (__AVR_ATmega328P__))
+defined (__AVR_ATmega8__) || defined (__AVR_ATmega168P__) || defined (__AVR_ATmega168__) || \
+defined (__AVR_ATmega328P__)) || defined (__AVR_ATmega328__)
 #define USB_CFG_IOPORTNAME     		D		// PORTD
 #define USB_CFG_DMINUS_BIT     		4		// (D-) = PD4	
 #define USB_CFG_DPLUS_BIT      		2		// (D+) = PD2 (INT0)
