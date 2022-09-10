@@ -112,17 +112,7 @@ Keyboard.println();                         // Напечатать любой �
 
 #### Константы клавиш
 <details>
-<summary>Системные</summary>
-
-```cpp
-KEY_POWER
-KEY_SLEEP
-KEY_WAKE
-```
-</details>
-
-<details>
-<summary>Обычные</summary>
+<summary>Обычные (press/click/release)</summary>
 
 ```cpp
 KEY_1
@@ -216,7 +206,7 @@ KEY_RIGHT_WIN
 </details>
 
 <details>
-<summary>Мультимедийные</summary>
+<summary>Мультимедийные (clickMultimediaKey)</summary>
 
 ```cpp
 KEY_VOL_UP
@@ -242,6 +232,15 @@ KEY_KB_FIND
 ```
 </details>
 
+<details>
+<summary>Системные (clickSystemKey)</summary>
+
+```cpp
+KEY_POWER
+KEY_SLEEP
+KEY_WAKE
+```
+</details>
 
 <a id="example"></a>
 ## Примеры
