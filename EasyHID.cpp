@@ -71,23 +71,25 @@ bool EasyHID::isScrollLock(void){
 
 void MouseClass::move(int8_t x, int8_t y){	
     report_buffer[0] = REPID_MOUSE;
-    report_buffer[1] = 0;
+    report_buffer[1] = btnBuffer;
     report_buffer[2] = (int8_t)x;
     report_buffer[3] = (int8_t)y;
     usbReportSend(REPSIZE_MOUSE);
 }
 
 void MouseClass::press(uint8_t btn){
+	btnBuffer = btn;
     report_buffer[0] = REPID_MOUSE;
-    report_buffer[1] = btn;
+    report_buffer[1] = btnBuffer;
     report_buffer[2] = 0;
     report_buffer[3] = 0;
     usbReportSend(REPSIZE_MOUSE);
 }
 
 void MouseClass::releaseAll(void){
+	btnBuffer = 0;
     report_buffer[0] = REPID_MOUSE;
-    report_buffer[1] = 0;
+    report_buffer[1] = btnBuffer;
     report_buffer[2] = 0;
     report_buffer[3] = 0;
     usbReportSend(REPSIZE_MOUSE);
@@ -96,6 +98,7 @@ void MouseClass::releaseAll(void){
 void MouseClass::click(uint8_t btn){
     press(btn);
     releaseAll();
+	btnBuffer = 0;
 }
 /*--------------------------------------------------------------------------------------*/
 
