@@ -3,11 +3,8 @@
    Список всех доступных клавиш см. в файле Codekeys.h
    Библиотека для энкодеров/кнопок: https://github.com/GyverLibs/EncButton
 
-   Если используется активная подтяжка при помощи пина,
-   обьявляем "EASYHID_SOFT_DETACH" ПЕРЕД подключением EasyHID.h
-   (Раскоментируйте строку ниже)
 */
-// #define EASYHID_SOFT_DETACH
+
 #define BTN_PIN 6 // Пин кнопки
 
 #include <EasyHID.h>

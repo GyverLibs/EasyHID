@@ -7,30 +7,25 @@
 
 /* ATtiny48 / ATtiny88 - Digispark подобные платы с usb загрузчиком */
 #if (defined (__AVR_ATtiny48__) || defined (__AVR_ATtiny88__))
-#define USB_CFG_IOPORTNAME             D        // PORTD
-#define USB_CFG_DMINUS_BIT             1       // (D-) = PD1    
-#define USB_CFG_DPLUS_BIT              2        // (D+) = PD2 (INT0)
-// #define USB_CFG_PULLUP_IOPORTNAME          // PULLUP не распаян
-// #define USB_CFG_PULLUP_BIT                // PULLUP не распаян
+#define USB_CFG_IOPORTNAME     		D		// PORTD
+#define USB_CFG_DMINUS_BIT     		1   	// (D-) = PD1	
+#define USB_CFG_DPLUS_BIT      		2		// (D+) = PD2 (INT0)
+
 
 /* Digispark Pro на 16 Мгц  */
 #elif defined (__AVR_ATtiny167__)
-#define USB_CFG_IOPORTNAME             B        // PORTD
-#define USB_CFG_DMINUS_BIT             3       // (D-) = PD1    
-#define USB_CFG_DPLUS_BIT              6        // (D+) = PD2 (INT0)
+#define USB_CFG_IOPORTNAME     		B		// PORTD
+#define USB_CFG_DMINUS_BIT     		3   	// (D-) = PD1	
+#define USB_CFG_DPLUS_BIT      		6		// (D+) = PD2 (INT0)
 
 
 /* ATmega48p...ATmega328p - Arduino платы и голые камни */
 #elif (defined (__AVR_ATmega48P__) || defined (__AVR_ATmega88P__) ||  \
 defined (__AVR_ATmega8__) || defined (__AVR_ATmega168P__) || defined (__AVR_ATmega168__) || \
-defined (__AVR_ATmega328P__)) || defined (__AVR_ATmega328__)
-#define USB_CFG_IOPORTNAME             D        // PORTD
-#define USB_CFG_DMINUS_BIT             4        // (D-) = PD4    
-#define USB_CFG_DPLUS_BIT              2        // (D+) = PD2 (INT0)
-#if defined(EASYHID_SOFT_DETACH)            // PULLUP по желанию
-#define USB_CFG_PULLUP_IOPORTNAME      D        // PORTD    
-#define USB_CFG_PULLUP_BIT            5        // PD5
-#endif
+defined (__AVR_ATmega328P__) || defined (__AVR_ATmega328__))
+#define USB_CFG_IOPORTNAME     		D		// PORTD
+#define USB_CFG_DMINUS_BIT     		4		// (D-) = PD4	
+#define USB_CFG_DPLUS_BIT      		2		// (D+) = PD2 (INT0)
 
 /* Для будущих дополнений... */
 #endif
@@ -355,6 +350,6 @@ defined (__AVR_ATmega328P__)) || defined (__AVR_ATmega328__)
 //#define USB_INTR_ENABLE_BIT     INT0 */
 //#define USB_INTR_PENDING        GIFR */
 //#define USB_INTR_PENDING_BIT    INTF0 */
-#define USB_INTR_VECTOR INT0_vect
+#define USB_INTR_VECTOR 		  INT0_vect
 
 #endif /* __usbconfig_h_included__ */

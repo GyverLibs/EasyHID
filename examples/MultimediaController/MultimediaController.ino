@@ -5,12 +5,8 @@
     -Поворот влево + нажатие    previous track
     -Поворот влево + нажатие    next track
     -Клик по энкодеру           play / pause
-    
-   Если используется активная подтяжка при помощи пина,
-   обьявляем "EASYHID_SOFT_DETACH" ПЕРЕД подключением EasyHID.h
-   (Раскоментируйте строку ниже)
+
 */
-// #define EASYHID_SOFT_DETACH
 #define _EB_HOLD  300   // Переопределяем таймаут удержания
 #define ENC_CK    6     // CK пин энкодера   
 #define ENC_DT    7     // DT пин энкодера    

@@ -22,12 +22,12 @@ extern "C" {
 #define REPID_MOUSE         1
 #define REPID_KEYBOARD      2
 #define REPID_MM_KEY        3
-#define REPID_SYS_KEY        4
+#define REPID_SYS_KEY    	4
 
 #define REPSIZE_MOUSE       4
 #define REPSIZE_MM_KEY      3
-#define REPSIZE_SYS_KEY      2
-#define REPSIZE_KEYBOARD    8
+#define REPSIZE_SYS_KEY  	2
+#define REPSIZE_KEYBOARD	8
 
 #ifdef __cplusplus
 }

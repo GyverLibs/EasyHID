@@ -28,6 +28,11 @@
     - v2.3 - добавлена поддержка ATmega8
     - v2.4 - добавлена поддержка Arduino IDE 2.0
     - v2.5 - вызов метод move для мышки теперь сбрасывает клик
+    - v2.6
+        - Убран функционал SOFT_DETACH, вводящий пользователей в заблуждение. (см. схемы)
+        - Добавлены новые схемы подключения
+        - Исправлены ошибки некорректной работы индикаторов ScrolLock,CapsLock, NumLock
+        - Добавлены сканкоды KEY_CAPS_LOCK, KEY_SCROLL_LOCK и KEY_NUM_LOCK
 */
 
 #ifndef _EasyHID_h
@@ -45,24 +50,24 @@ extern "C" {
 #endif
 
 class EasyHID {
-public:                            // Класс HID
-    void begin(void);            // Инициализация шины USB
-    void end(void);                // Отключение шины USB
+public:                         // Класс HID
+    void begin(void);           // Инициализация шины USB
+    void end(void);             // Отключение шины USB
     void tick(void);            // Поллинг шины (вызывать не реже чем раз в 10мс!)
-    bool isConnected(void);        // Статус шины
-    bool isNumLock(void);        // Проверка numLock
+    bool isConnected(void);     // Статус шины
+    bool isNumLock(void);       // Проверка numLock
     bool isCapsLock(void);      // Проверка capsLock
     bool isScrollLock(void);    // Проверка scrollLock
 };
 
 class MouseClass {                            
-public:                                        // Класс мышки
-    void move(int8_t x, int8_t y);            // Двигаем курсор
-    void click(uint8_t btn = MOUSE_LEFT);    // Кликаем на клавишу
-    void press(uint8_t btn = MOUSE_LEFT);    // Зажимаем клавишу
-    void releaseAll(void);                    // Отпускаем все
+public:                                     // Класс мышки
+    void move(int8_t x, int8_t y);          // Двигаем курсор
+    void click(uint8_t btn = MOUSE_LEFT);   // Кликаем на клавишу
+    void press(uint8_t btn = MOUSE_LEFT);   // Зажимаем клавишу
+    void releaseAll(void);                  // Отпускаем все
 private:            
-    uint8_t btnBuffer = 0;                    // Состояние кнопки    
+    uint8_t btnBuffer = 0;                  // Состояние кнопки    
 };
 
 class KeyboardClass : public Print {                                                            

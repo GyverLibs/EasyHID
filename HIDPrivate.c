@@ -156,7 +156,7 @@ usbMsgLen_t usbFunctionSetup(uint8_t data[8])
         if (rq->wValue.bytes[0] == REPID_SYS_KEY) 	 return REPSIZE_SYS_KEY;
         return 8; // default
     case USBRQ_HID_SET_REPORT:
-        if (rq->wLength.word == 1) // check data is available
+        if (rq->wLength.word == 2) // check data is available
         {
             // 1 byte, we don't check report type (it can only be output or feature)
             // we never implemented "feature" reports so it can't be feature
@@ -177,7 +177,8 @@ usbMsgLen_t usbFunctionSetup(uint8_t data[8])
 // see http://vusb.wikidot.com/driver-api
 usbMsgLen_t usbFunctionWrite(uint8_t * data, uchar len)
 {
-    led_state = data[0];
-    return 1; // 1 byte read
+	if (data[0] == REPID_KEYBOARD)
+		led_state = data[1];
+    return 2; // 1 byte read
 }
 
