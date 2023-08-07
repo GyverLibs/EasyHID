@@ -55,7 +55,7 @@
 <a id="wiring"></a>
 ## Подключение
 ### Arduino UNO/NANO/PRO MINI (ATmega328p/168p) 16 MHz
-![scheme](/docs/sch1.jpg)
+![scheme](/docs/sch1.png)
 
 ### Компоненты
 - Стабилитрон - любой маломощный на 3.6V
