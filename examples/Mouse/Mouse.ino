@@ -20,6 +20,7 @@ void loop() {
       case 1: Mouse.move(0, 100);  break;
       case 2: Mouse.move(-100, 0); break;
       case 3: Mouse.move(0, -100); break;
+	  // Для длинных перемещений (>127 пикс. по осям) используйте moveLong()!
     }
     // Mouse.click();                     // Можно кликнуть ЛКМ
     // Mouse.click(MOUSE_MIDDLE);         // Или RIGHT, LEFT, MIDDLE

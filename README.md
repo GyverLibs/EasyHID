@@ -93,7 +93,7 @@ HID.isScrollLock();     // (bool) Проверка scrollLock
 
 ### Mouse
 ```cpp
-Mouse.move(int8_t x, int8_t y);     // Двигаем курсор
+Mouse.move(int16_t x, int16_t y);   // Двигаем курсор
 Mouse.click(uint8_t btn);           // Кликаем на клавишу
 Mouse.press(uint8_t btn);           // Зажимаем клавишу
 Mouse.releaseAll();                 // Отпускаем все
@@ -329,6 +329,9 @@ void loop() {
     - Добавлены новые схемы подключения
     - Исправлены ошибки некорректной работы индикаторов ScrolLock, CapsLock, NumLock
     - Добавлены сканкоды KEY_CAPS_LOCK, KEY_SCROLL_LOCK и KEY_NUM_LOCK
+- v2.7:
+  - Курсор мыши теперь можно двигать на расстояние int16_t (было int8_t)
+  - Исправлен баг с клавишами-модификаторами при вызове метода Keyboard.release(), теперь корректно работают любые сочетания
 
 <a id="feedback"></a>
 ## Баги и обратная связь
