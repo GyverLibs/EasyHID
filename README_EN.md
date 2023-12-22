@@ -1,305 +1,344 @@
 This is an automatic translation, may be incorrect in some places. See sources and examples!
 
-# EasyHID
-Library for software implementation of USB keyboard and mouse on some MK AVR and boards based on them
-- Letter keys
+# Easyhid
+Library for the software implementation of the USB keyboard and mouse on some AVR MK and boards based on them
+- Lamp keys
 - Multimedia keys
-- System keys and shortcuts
-- Buffering clicks
-- Mouse movement and pressing its buttons
+- System keys and combinations
+- Booferization of presses
+- mouse movement and pressing its buttons
 
-### Compatibility
-- ATmega328 16 MHz (Nano, Uno, Mini board)
-- ATtiny88 (MH-ET board)
-- ATtiny167 (Digispark PRO board)
--ATtiny48
-- ATmega168/88/48/8
+### video on the library
+[Look at YouTube] (https://www.youtube.com/watch?v=wshdpdfkd0)
+
+## compatibility
+### MK AVR with tacting 16 MHz !!!
+- Atmega328 (Nano, UNO, Mini)
+- Atmega168/88/48/8
+- Attiny88 (MH -T-ST) ** works through USB on the board! **
+- Attiny167 (Digispark Pro) ** works through USB on the board! **
+- Attiny48
+
+#### Important points
+- The library conflicts with built -in functions `Attachinterept ()` and `Detachinterrapt ()`, see example *Multimediaramote *
+- Do not use a long (more than 1 meter) USB cable!
+- For the correct operation, you need to power the microcontroller from the same USB cable that is used to emulate USB.That is, the launch should occur when connecting the USB cable to the host
 
 ## Content
-- [Install](#install)
-- [Connection](#wiring)
-- [Usage](#usage)
-- [Example](#example)
-- [Versions](#versions)
-- [Bugs and feedback](#feedback)
+- [installation] (# Install)
+- [connection] (#wiring)
+- [use] (#usage)
+- [Example] (# Example)
+- [versions] (#varsions)
+- [bugs and feedback] (#fedback)
 
-<a id="install"></a>
+<a id="install"> </a>
 ## Installation
-- **LIBRARY NOT AVAILABLE IN LIBRARY MANAGER** due to project structure. If someone can run the code from the src folder - throw a pull request!
-- [Download library](https://github.com/GyverLibs/EasyHID/archive/refs/heads/main.zip) .zip archive for manual installation:
-    - Unzip and put in *C:\Program Files (x86)\Arduino\libraries* (Windows x64)
-    - Unzip and put in *C:\Program Files\Arduino\libraries* (Windows x32)
-    - Unpack and put in *Documents/Arduino/libraries/*
-    - (Arduino IDE) automatic installation from .zip: *Sketch/Include library/Add .ZIP library…* and specify the downloaded archive
-- Read more detailed instructions for installing libraries [here] (https://alexgyver.ru/arduino-first/#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE% D0%B2%D0%BA%D0%B0_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA)
+- ** The library is not available in the library manager ** due to the structure of the project.If someone can start the code from the SRC folder - throw the Pool of the Orvest!
+- [download the library] (https://github.com/gyverlibs/easyhid/archive/refs/heads/main.zip) .Zip archive for manual installation:
+    - unpack and put in * C: \ Program Files (X86) \ Arduino \ Libraries * (Windows X64)
+    - unpack and put in * C: \ Program Files \ Arduino \ Libraries * (Windows X32)
+    - unpack and put in *documents/arduino/libraries/ *
+    - (Arduino id) Automatic installation from. Zip: * sketch/connect the library/add .Zip library ... * and specify downloaded archive
+- Read more detailed instructions for installing libraries [here] (https://alexgyver.ru/arduino-first/#%D0%A3%D1%81%D1%82%D0%B0%BD%D0%BE%BE%BE%BED0%B2%D0%BA%D0%B0_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA)
+### Update
+- I recommend always updating the library: errors and bugs are corrected in the new versions, as well as optimization and new features are added
+- through the IDE library manager: find the library how to install and click "update"
+- Manually: ** remove the folder with the old version **, and then put a new one in its place.“Replacement” cannot be done: sometimes in new versions, files that remain when replacing are deleted and can lead to errors!
 
-<a id="wiring"></a>
-## Connection
-Scheme on the example of Arduino Nano
-![scheme](/docs/schemes.png)
-- Zener diode - any low-power at 3.6V
-- Resistor 100 Ohm - can be replaced by another in the range of 47.. 200 Ohm
-- Resistor 1.5 kOhm - can be replaced with another one in the range of 1.2.. 2.2 kOhm
-- Diode - any ordinary silicon (with a drop of 0.7V)
 
-> If active pin pulling is used, add `#define EASYHID_SOFT_DETACH` BEFORE including EasyHID.h
+<a id="wiring"> </a>
+## connection
+### Arduino UNO/Nano/Pro mini (atmega328p/168p) 16 mhz
+! [Scheme] (/doc/sch1.png)
 
-### Pins
-The port and pin can be set in the *usbconfig.h* file. Standard:
-- ATtiny88 (MH-ET board) - USB soldered on the board
-    - **D-** - pin 0 (PD1)
-    - **D+** - pin 2 (PD2) (INT0)
+### Components
+- zener diode - any low -power at 3.6V
+- resistor 100 Ohms - can be replaced with another in the range of 47 .. 200 Ohms
+- resistor 1.5 kOhm - can be replaced with another in the range 1.2 .. 2.2 kom
+- diode - any ordinary silicon (with a fall of 0.7v)
 
-- ATtiny167 (Digispark PRO board) - USB soldered on the board
-    - **D-** - pin 4 (PB3)
-    - **D+** - pin 3 (PB6) (INT0)
+### Pina
+The port and pin can be set in the *usbconfig.h *file.Standard:
+- Attiny88 (MH -ST board) - USB is rolled up on the board
+    - ** D - ** - PIN 0 (PD1)
+    - ** d+** - PIN 2 (PD2) (int0)
+
+- Attiny167 (Digispark Pro) - USB rolled up on the board
+    - ** d - ** - PIN 4 (pb3)
+    - ** d+** - PIN 3 (PB6) (int0)
     
-- ATmega328/168/88/48
-    - **D-** - (PD4)
-    - **D+** - (PD2) (INT0)
-    - **PULL** - (PD5)
+- Atmega328/168/88/48
+    - ** D - ** - (PD4)
+    - ** d+** - (PD2) (int0)
+    - ** pull ** - (PD5)
 
-<a id="usage"></a>
-## Usage
-### HID
-```cpp
-HID.begin(); // USB bus initialization
-HID end(); // Disable USB bus
-HID.tick(); // Bus polling (call at least once every 10ms)
-HID.isConnected(); // (bool) Bus status
-HID.isNumLock(); // (bool) Check numLock
-HID.isCapsLock(); // (bool) Check capsLock
-HID.isScrollLock(); // (bool) Check scrollLock
-```
+<a id="usage"> </a>
+## use
+## hid
+`` `CPP
+Hid.begin ();// initialization of USB tires
+Hid.end ();// Tires Tires USB
+Hid.tick ();// Polling Tires (call at least once every 10MS)
+Hid.isconnected ();// (bool) tire status
+Hid.isnumlock ();// (bool) check numlock
+Hid.iscapslock ();// (bool) check Capslock
+Hid.isscrolllock ();// (bool) check scroll
+`` `
 
 ### Mouse
-```cpp
-Mouse.move(int8_t x, int8_t y); // Move cursor
-Mouse.click(uint8_t btn); // Click on the key
-Mouse.press(uint8_t btn); // Hold down the key
-Mouse.releaseAll(); // Release everything
+`` `CPP
+Mouse.move (int16_t x, int16_t y);// Moving the cursor
+Mouse.click (uint8_t btn);// click on the key
+Mouse.press (uint8_t BTN);// Clound the key
+Mouse.releaseall ();// let out everything
 
-// BUTTON CONSTANTS
-MOUSE_LEFT
-MOUSE_RIGHT
-MOUSE_MIDDLE
-```
+// Constant buttons
+Mouse_left
+Mouse_right
+Mouse_middle
+`` `
 
-### Keyboard
-```cpp
-Keyboard.press(uint8_t key1, ... key5); // Press up to five buttons
-Keyboard.click(uint8_t key1, ... key5); // Click up to five buttons
-Keyboard.release(uint8_t key1, ... key5); // Release up to five buttons
-Keyboard.releaseAll(); // Release all previously pressed
-Keyboard.clickMultimediaKey(uint8_t key); // Click media keycranberry avishu
-Keyboard.clickSystemKey(uint8_t key); // Click the system key
+## K Keyboard
+`` `CPP
+Keyboard.press (uint8_t key1, ... key5);// pressing up to five buttons
+Keyboard.click (uint8_t key1, ... key5);// Click up to five buttons
+Keyboard.release (uint8_t key1, ... key5);// release up to five buttons
+Keyboard.releaseall ();// let go all previously pressed
+Keyboard.clickmultimediakey (uint8_t key);// Click multimedia key
+Keyboard.clickSystemkey (uint8_t key);// Click the system key
 
-Keyboard.write(uint8_t data); // print character
-Keyboard.print(); // Print any type of data (from Print.h)
-Keyboard.println(); // Print any type of data (from Print.h)
-```
+Keyboard.write (uint8_t data);// Print a symbol
+Keyboard.print ();// Print any type of data (from print.h)
+Keyboard.println ();// Print any type of data (from print.h)
+`` `
 
-#### Key constants
+#### Constant Key
 <details>
-<summary>System</summary>
+<summary> ordinary (Press/Click/Release) </ Summary>
 
-```cpp
-KEY_LEFT_CONTROL
-KEY_LEFT_SHIFT
-KEY_LEFT_ALT
-KEY_LEFT_WIN
-KEY_RIGHT_CONTROL
-KEY_RIGHT_SHIFT
-KEY_RIGHT_ALT
-KEY_RIGHT_WIN
+`` `CPP
+Key_1
+Key_2
+Key_3
+Key_4
+Key_5
+Key_6
+Key_7
+Key_8
+Key_9
+Key_0
 
-KEY_POWER
-KEY_SLEEP
-KEY_WAKE
-```
+Key_a
+Key_b
+Key_c
+Key_d
+Key_e
+Key_f
+Key_g
+Key_h
+Key_i
+Key_j
+Key_k
+Key_l
+Key_m
+Key_n
+Key_o
+Key_p
+Key_q
+Key_r
+Key_s
+Key_t
+Key_u
+Key_v
+Key_w
+Key_x
+Key_y
+Key_z
+
+Key_commma
+Key_period
+Key_minus
+Key_equal
+Key_Backslash
+Key_sqbrak_left
+Key_sqbrak_right
+Key_slash
+
+Key_f1
+Key_f2
+Key_f3
+Key_f4
+Key_f5
+Key_f6
+Key_f7
+Key_f8
+Key_f9
+Key_f10
+Key_f11
+Key_f12
+
+Key_app
+Key_enter
+Key_Backspace
+Key_esc
+Key_tab
+Key_Space
+Key_insert
+Key_home
+Key_page_up
+Key_delete
+Key_end
+Key_page_Down
+Key_printscreen
+
+Key_arrow_right
+Key_arrow_left
+Key_arrow_down
+Key_arrow_up
+    
+Key_left_control
+Key_left_shift
+Key_left_alt
+Key_left_win
+Key_right_control
+Key_right_shift
+Key_Right_alt
+Key_right_win
+`` `
 </details>
 
 <details>
-<summary>Normal</summary>
+<summary> multimedia (Clickmultimediakey) </ Summary>
 
-```cpp
-KEY_1
-KEY_2
-KEY_3
-KEY_4
-KEY_5
-KEY_6
-KEY_7
-KEY_8
-KEY_9
-KEY_0
-KEY_A
-KEY_B
-KEY_C
-KEY_D
-KEY_E
-KEY_F
-KEY_G
-KEY_H
-KEY_I
-KEY_J
-KEY_K
-KEY_L
-KEY_M
-KEY_N
-KEY_O
-KEY_P
-KEY_Q
-KEY_R
-KEY_S
-KEY_T
-KEY_U
-KEY_V
-KEY_W
-KEY_X
-KEY_Y
-KEY_Z
-KEY_COMMA
-KEY_PERIOD
-KEY_MINUS
-KEY_EQUAL
-KEY_BACKSLASH
-KEY_SQBRAK_LEFT
-KEY_SQBRAK_RIGHT
-KEY_SLASH
-KEY_F1
-KEY_F2
-KEY_F3
-KEY_F4
-KEY_F5
-KEY_F6
-KEY_F7
-KEY_F8
-KEY_F9
-KEY_F10
-KEY_F11
-KEY_F12
-KEY_APP
-KEY_ENTER
-KEY_BACKSPACE
-KEY_ESC
-KEY_TAB
-KEY_SPACE
-KEY_INSERT
-KEY_HOME
-KEY_PAGE_UP
-KEY_DELETE
-KEY_END
-KEY_PAGE_DOWN
-KEY_PRINTSCREEN
-KEY_ARROW_RIGHT
-KEY_ARROW_LEFT
-KEY_ARROW_DOWN
-KEY_ARROW_UP
-```
+`` `CPP
+Key_vol_up
+Key_vol_Down
+Key_next_track
+Key_prev_track
+Key_stop
+Key_playpause
+Key_Mute
+Key_bassboost
+Key_loudness
+Key_kb_execute
+Key_kb_help
+Key_kb_Menu
+Key_kb_select
+Key_kb_stop
+Key_kb_again
+Key_kb_undo
+Key_kb_cut
+Key_kb_copy
+Key_kb_paste
+Key_kb_find
+`` `
 </details>
 
 <details>
-<summary>Multimedia</summary>
+<summary> Systemic (ClickSystemkey) </ Summary>
 
-```cpp
-KEY_VOL_UP
-KEY_VOL_DOWN
-KEY_NEXT_TRACK
-KEY_PREV_TRACK
-KEY_STOP
-KEY_PLAYPAUSE
-KEY_MUTE
-KEY_BASSBOOST
-KEY_LOUDNESS
-KEY_KB_EXECUTE
-KEY_KB_HELP
-KEY_KB_MENU
-KEY_KB_SELECT
-KEY_KB_STOP
-KEY_KB_AGAIN
-KEY_KB_UNDO
-KEY_KB_CUT
-KEY_KB_COPY
-KEY_KB_PASTE
-KEY_KB_FIND
-```
+`` `CPP
+Key_power
+Key_Sleep
+Key_wake
+`` `
 </details>
 
-
-<a id="example"></a>
+<a id="EXAMPLE"> </a>
 ## Examples
-> See more advanced examples in the examples folder!
+> See more advanced examples in the Examples folder!
 
 ### Keyboard
-```cpp
-#include <EasyHID.h>
+`` `CPP
+#include <Easyhid.h>
 
-void setup() {
-  HID.begin(); // USB initialization
+VOID setup () {
+  Hid.begin ();// initialization of USB
 }
 
-void loop() {
-  static uint32_t timer = millis(); // Millis - Timer (NOT DELAY!!!)
-  if (millis() - timer >= 1000) { // Every 1000ms
-    timer = millis();
+VOID loop () {
+  static uint32_t timer = millis ();// millis - timer (not delay !!!)
+  if (millis () - timer> = 1000) {// every 1000 ms
+    Timer = Millis ();
 
-    Keyboard.press(KEY_1); // Hold down the '1' key
-    Keyboard.releaseAll(); // Release all keys
-    Keyboard.click(KEY_SPACE); // Click the space bar (press + releaseAll)
-    keyboard.write('-'); // Output dash
-    Keyboard.println("Hello world!"); // Print in println
+    Keyboard.press (key_1);// clamp the key '1'
+    Keyboard.releaseall ();// let out all the keys
+    Keyboard.click (key_space);// Click a gap (Press + Releaseall)
+    Keyboard.write ('-');// Display the dash
+    Keyboard.println ("Hello World!");// Println Printing
   }
 
-  HID.tick(); // Call the ticker at least every 10ms!
+  Hid.tick ();// Call the ticker at least every 10 ms!
 }
-```
+`` `
 
 ### Mouse
-```cpp
-#include <EasyHID.h>
+`` `CPP
+#include <Easyhid.h>
 
-void setup() {
-  HID.begin(); // USB initialization
+VOID setup () {
+  Hid.begin ();// initialization of USB
 }
 
-void loop() {
-  static uint8_t count = 0; // Direction
-  static uint32_t timer = millis(); // Millis - Timer (NOT DELAY!!!)
-  if (millis() - timer >= 1000) { // Every 1000ms
-    timer = millis();
-    switch (count) {
-      case 0: Mouse.move(100, 0); break; // Move the mouse to X-Y pixels.
-      case 1: Mouse.move(0, 100); break;
-      case 2: Mouse.move(-100, 0); break;
-      case 3: Mouse.move(0, -100); break;
+VOID loop () {
+  static uint8_t count = 0;// Direction
+  static uint32_t timer = millis ();// millis - timer (not delay !!!)
+  if (millis () - timer> = 1000) {// every 1000 ms
+    Timer = Millis ();
+    Switch (Count) {
+      Case 0: Mouse.move (100, 0);Break;// Move the mouse on the X-Y Pix.
+      Case 1: Mouse.move (0, 100);Break;
+      Case 2: Mouse.move (-100, 0);Break;
+      Case 3:mouse.move (0, -100);Break;
     }
-    // Mouse.click(); // Can be left clicked
-    // Mouse.click(MOUSE_MIDDLE); // Or RIGHT, LEFT, MIDDLE
-    if (++count > 3) count = 0; // Cycle shift from 0 to 3
+    // mouse.click ();// you can click LKM
+    // mouse.click (mouse_middle);// or Right, Left, Middle
+    if (++ count> 3) Count = 0;// Cyclic shift from 0 to 3
   }
 
-  HID.tick(); // Call the ticker at least every 10ms!
+  Hid.tick ();// Call the ticker at least every 10 ms!
 }
-```
+`` `
 
-<a id="versions"></a>
-## Versions
-- v1.0
-- v2.0
-    - Added buffering of keys (up to 5 pieces simultaneously pressed)
-    - Added release(), from one to 5 keys
-    - System keys and shortcuts work
-    - Added support for Digispark PRO board based on ATtiny167
-    - Added support for MH-ET board based on ATtiny88
-    - Now, if an active pull-up is involved in the circuit (see the diagram), you must either add #define EASYHID_SOFT_DETACH before connecting
-    - Added end() method: disables USB, is correctly perceived by the computer without error only when using a circuit with active pullup
+<a id="versions"> </a>
+## versions
+- V1.0
+- V2.0
+    - Added keyboardization of keys (up to 5 pieces of simultaneously pressed)
+    - added Release (), from one to 5 keys
+    - Work system keys and combinations
+    - Added support for Digispark Pro board based on Attiny167
+    - Added support for the MH-ST board based on Attiny88
+    - Now, if the circuit is involved in the active lifellation (see diagram) before connecting the LIBE, add # DEFINE EASYHID_SOLID_DETACH before connecting
+    - Added the End () method: Disaches usb, is correctly perceived by a computer without error only when using a scheme with active pullup
     - Added more convenient constants
-- v2.1 - small optimization
-- v2.2 - fixed bug with ATmega328
-- v2.2.1 - fixed bug
+- V2.1 - Small optimization
+- V2.2 - Filled Bag with Atmega328
+- V2.2.1 - Filled Bag
+- V2.3 - Added support atmega8
+- V2.4 - Added support for Arduino IDE 2.0
+- V2.5 - Calling Move method for the mouse now does not drop a click
+- V2.6
+    - The functionality of Soft_Detach is removed, misleading users.(see schemes)
+    - Added new connection schemes
+    - Fixed errors of incorrect operation of indicators Scrollock, Capslock, Numlock
+    - Added scankds Key_caps_Lock, Key_Scroll_LOCK and KEY_NUM_LOCK
+- V2.7:
+  - the mouse cursor can now be moved to the distance int16_t (it was int8_t)
+  - Fixed a bug with modifier keys when calling the keyboard.release () method, any combinations are now working correctly
 
-<a id="feedback"></a>
-## Bugs and feedback
-When you find bugs, create an **Issue**, or better, immediately write to the mail [alex@alexgyver.ru](mailto:alex@alexgyver.ru)
-The library is open for revision and your **Pull Request**'s!
+<a id="feedback"> </a>
+## bugs and feedback
+Create ** Issue ** when you find the bugs, and better immediately write to the mail [alex@alexgyver.ru] (mailto: alex@alexgyver.ru)
+The library is open for refinement and your ** pull Request ** 'ow!
+
+
+When reporting about bugs or incorrect work of the library, it is necessary to indicate:
+- The version of the library
+- What is MK used
+- SDK version (for ESP)
+- version of Arduino ide
+- whether the built -in examples work correctly, in which the functions and designs are used, leading to a bug in your code
+- what code has been loaded, what work was expected from it and how it works in reality
+- Ideally, attach the minimum code in which the bug is observed.Not a canvas of a thousand lines, but a minimum code
