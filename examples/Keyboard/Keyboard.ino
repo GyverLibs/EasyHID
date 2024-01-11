@@ -8,13 +8,13 @@
 
 #include <EasyHID.h>					          // Либа HID 
 
+static uint8_t count = 0;             // Направление
+static uint32_t timer = millis();     // Миллис - таймер (НЕ DELAY!!!)
 void setup() {
   HID.begin();                          // Инициализация USB
 }
 
 void loop() {
-  static uint8_t count = 0;             // Направление
-  static uint32_t timer = millis();     // Миллис - таймер (НЕ DELAY!!!)
   if (millis() - timer >= 1000) {       // Каждые 3000 мс
     timer = millis();
     switch (count) {
