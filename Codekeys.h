@@ -66,6 +66,8 @@
 #define KEY_BACKSLASH        0x31
 #define KEY_SQBRAK_LEFT      0x2F
 #define KEY_SQBRAK_RIGHT     0x30
+#define KEY_SEMICOLON        0x33
+#define KEY_SINGLE_QUOTE     0x34
 #define KEY_SLASH            0x38
 #define KEY_F1               0x3A
 #define KEY_F2               0x3B
