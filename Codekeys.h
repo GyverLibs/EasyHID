@@ -123,7 +123,7 @@
 #define KEY_KB_FIND          0x7E
 
 #define KEY_SLEEP            0x01
-#define KEY_POWER            0x02
+#define KEY_POWER            0x66
 #define KEY_WAKE             0x03
 
 // СИСТЕМНЫЕ (НЕ ДЛЯ СКЕТЧА)
