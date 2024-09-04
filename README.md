@@ -1,4 +1,5 @@
 [![Foo](https://img.shields.io/badge/Version-2.4-brightgreen.svg?style=flat-square)](#versions)
+[![PIO](https://badges.registry.platformio.org/packages/gyverlibs/library/EasyHID.svg)](https://registry.platformio.org/libraries/gyverlibs/EasyHID)
 [![Foo](https://img.shields.io/badge/Website-AlexGyver.ru-blue.svg?style=flat-square)](https://alexgyver.ru/)
 [![Foo](https://img.shields.io/badge/%E2%82%BD%24%E2%82%AC%20%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D1%82%D1%8C-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B0-orange.svg?style=flat-square)](https://alexgyver.ru/support_alex/)
 [![Foo](https://img.shields.io/badge/README-ENGLISH-blueviolet.svg?style=flat-square)](https://github-com.translate.goog/GyverLibs/EasyHID?_x_tr_sl=ru&_x_tr_tl=en)  
