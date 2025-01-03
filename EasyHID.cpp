@@ -20,6 +20,10 @@ void EasyHID::begin(void) {
   pinMode(3, INPUT);
   pinMode(4, INPUT);
 
+#elif defined(__AVR_ATtiny85__)
+  pinMode(3, INPUT);
+  pinMode(4, INPUT);
+
 #elif (defined(__AVR_ATmega48P__) || defined(__AVR_ATmega88P__) ||  \
        defined(__AVR_ATmega168P__) || defined(__AVR_ATmega168__) || \
        defined(__AVR_ATmega328P__)) ||                              \
