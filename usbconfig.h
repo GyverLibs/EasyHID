@@ -18,6 +18,13 @@
 #define USB_CFG_DMINUS_BIT     		3   	// (D-) = PD1	
 #define USB_CFG_DPLUS_BIT      		6		// (D+) = PD2 (INT0)
 
+/* Micronucleus */
+#elif defined (__AVR_ATtiny85__)
+#define USB_CFG_IOPORTNAME     		B		// PORTB
+#define USB_CFG_DMINUS_BIT     		3   	// (D-) = PB3	
+#define USB_CFG_DPLUS_BIT      		4		// (D+) = PB4
+
+
 
 /* ATmega48p...ATmega328p - Arduino платы и голые камни */
 #elif (defined (__AVR_ATmega48P__) || defined (__AVR_ATmega88P__) ||  \
@@ -343,6 +350,18 @@ defined (__AVR_ATmega328P__) || defined (__AVR_ATmega328__))
 * which is not fully supported (such as IAR C) or if you use a differnt
 * interrupt than INT0, you may have to define some of these.
 */
+
+#if defined (__AVR_ATtiny85__)
+#define USB_INTR_CFG            PCMSK
+#define USB_INTR_CFG_SET        (1 << USB_CFG_DPLUS_BIT)
+#define USB_INTR_CFG_CLR        0
+#define USB_INTR_ENABLE         GIMSK
+#define USB_INTR_ENABLE_BIT     PCIE
+#define USB_INTR_PENDING        GIFR
+#define USB_INTR_PENDING_BIT    PCIF
+#define USB_INTR_VECTOR         PCINT0_vect
+
+#else
 //#define USB_INTR_CFG            MCUCR */
 //#define USB_INTR_CFG_SET        ((1 << ISC00) | (1 << ISC01)) */
 //#define USB_INTR_CFG_CLR        0 */
@@ -351,5 +370,7 @@ defined (__AVR_ATmega328P__) || defined (__AVR_ATmega328__))
 //#define USB_INTR_PENDING        GIFR */
 //#define USB_INTR_PENDING_BIT    INTF0 */
 #define USB_INTR_VECTOR 		  INT0_vect
+
+#endif
 
 #endif /* __usbconfig_h_included__ */

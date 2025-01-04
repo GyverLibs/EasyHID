@@ -18,6 +18,7 @@ Library for the software implementation of the USB keyboard and mouse on some AV
 - Attiny88 (MH -T-ST) ** works through USB on the board! **
 - Attiny167 (Digispark Pro) ** works through USB on the board! **
 - Attiny48
+- Attiny85 (D- on PB3, D+ on PB4)
 
 #### Important points
 - The library conflicts with built -in functions `Attachinterept ()` and `Detachinterrapt ()`, see example *Multimediaramote *

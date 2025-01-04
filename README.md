@@ -24,6 +24,7 @@
 - ATtiny88 (плата MH-ET) **работает через USB на плате!**
 - ATtiny167 (плата Digispark PRO) **работает через USB на плате!**
 - ATtiny48
+- ATtiny85 (D- на PB3, D+ на PB4)
 
 #### Важные моменты
 - Библиотека конфликтует со встроенными функциями `attachInterrupt()` и `detachInterrupt()`, см. пример *MultimediaRemote*
