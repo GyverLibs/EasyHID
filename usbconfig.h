@@ -19,7 +19,7 @@
 #define USB_CFG_DPLUS_BIT      		6		// (D+) = PD2 (INT0)
 
 /* Micronucleus */
-#elif defined (__AVR_ATtiny85__)
+#elif (defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__))
 #define USB_CFG_IOPORTNAME     		B		// PORTB
 #define USB_CFG_DMINUS_BIT     		3   	// (D-) = PB3	
 #define USB_CFG_DPLUS_BIT      		4		// (D+) = PB4
@@ -351,7 +351,7 @@ defined (__AVR_ATmega328P__) || defined (__AVR_ATmega328__))
 * interrupt than INT0, you may have to define some of these.
 */
 
-#if defined (__AVR_ATtiny85__)
+#if (defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__))
 #define USB_INTR_CFG            PCMSK
 #define USB_INTR_CFG_SET        (1 << USB_CFG_DPLUS_BIT)
 #define USB_INTR_CFG_CLR        0
