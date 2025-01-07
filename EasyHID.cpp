@@ -20,7 +20,7 @@ void EasyHID::begin(void) {
   pinMode(3, INPUT);
   pinMode(4, INPUT);
 
-#elif defined(__AVR_ATtiny85__)
+#elif (defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__))
   pinMode(3, INPUT);
   pinMode(4, INPUT);
 

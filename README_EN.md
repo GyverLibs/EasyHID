@@ -15,10 +15,10 @@ Library for the software implementation of the USB keyboard and mouse on some AV
 ### MK AVR with tacting 16 MHz !!!
 - Atmega328 (Nano, UNO, Mini)
 - Atmega168/88/48/8
-- Attiny88 (MH -T-ST) ** works through USB on the board! **
-- Attiny167 (Digispark Pro) ** works through USB on the board! **
+- Attiny88 (MH -T-ST) **works through USB on the board!**
+- Attiny167 (Digispark Pro) **works through USB on the board!**
 - Attiny48
-- Attiny85 (D- on PB3, D+ on PB4)
+- Attiny85/45 (Digispark and etc.) **works through USB on the board!**
 
 #### Important points
 - The library conflicts with built -in functions `Attachinterept ()` and `Detachinterrapt ()`, see example *Multimediaramote *
@@ -60,19 +60,23 @@ Library for the software implementation of the USB keyboard and mouse on some AV
 - diode - any ordinary silicon (with a fall of 0.7v)
 
 ### Pina
-The port and pin can be set in the *usbconfig.h *file.Standard:
-- Attiny88 (MH -ST board) - USB is rolled up on the board
-    - ** D - ** - PIN 0 (PD1)
-    - ** d+** - PIN 2 (PD2) (int0)
+The port and pin can be set in the *usbconfig.h* file.Standard:
+- Attiny88 (MH -ST board) - USB implemented on the board
+    - **D-** - PIN 0 (PD1)
+    - **D+** - PIN 2 (PD2) (INT0)
 
-- Attiny167 (Digispark Pro) - USB rolled up on the board
-    - ** d - ** - PIN 4 (pb3)
-    - ** d+** - PIN 3 (PB6) (int0)
+- Attiny167 (Digispark Pro) - USB implemented on the board
+    - **D-** - PIN 4 (PB3)
+    - **D+** - PIN 3 (PB6) (INT0)
+
+- ATtiny45/85 (Digispark and etc.) - USB implemented on the board
+    - **D-** - PIN 3 (PB3)
+    - **D+** - PIN 4 (PB4)
     
 - Atmega328/168/88/48
-    - ** D - ** - (PD4)
-    - ** d+** - (PD2) (int0)
-    - ** pull ** - (PD5)
+    - **D-** - (PD4)
+    - **D+** - (PD2) (INT0)
+    - **PULL** - (PD5)
 
 <a id="usage"> </a>
 ## use
